@@ -1,0 +1,53 @@
+#define _CRT_SECURE_NO_WRNINGS
+#include <iostream>
+#include <algorithm>
+#include <vector>
+#include <cstring>
+using namespace std;
+
+int MAX = -1;
+int sum = 0;
+int n, m;
+int arr[16][16];
+void cal(int x, int y) {
+	for (int i = x; i < x + m; i++) {
+		for (int j = y; j < y + m; j++) {
+			
+			sum = sum + arr[i][j];
+		}
+	}
+	MAX = max(sum, MAX);
+	sum = 0;
+}
+int main(void) {
+
+	ios_base::sync_with_stdio(0), cin.tie(0), cout.tie(0);
+	
+	int t;
+	cin >> t;
+	for (int tc = 1; tc <= t; tc++) {
+		
+		
+		
+		cin >> n >> m;
+		for (int i = 0; i < n; i++) {
+			for (int j = 0; j < n; j++) {
+				cin >> arr[i][j];
+			}
+		}
+		for (int i = 0; i < n-m+1; i++) {
+			for (int j = 0; j <n- m+1; j++) {
+				cal(i, j);
+			}
+		}
+		cout << "#" << tc << " " << MAX << endl;
+		MAX = -1;
+		memset(arr, 0, sizeof(arr));
+		sum = 0;
+	}
+	
+	return 0;
+}
+
+//m의 크기만큼 어떻게 반복시킬까 고민하다가 좌표를 기준으로 m크기만큼 계산하는 함수를 만들어서 해결하였다.
+
