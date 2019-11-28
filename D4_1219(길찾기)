@@ -1,0 +1,48 @@
+#define _CRT_SECURE_NO_WRNINGS
+#include <iostream>
+#include <algorithm>
+#include <vector>
+
+
+using namespace std;
+
+
+vector<vector<int>> v;
+int answer;
+void dfs(int x) {
+	if (x == 99) {
+		answer = 1;
+	}
+
+	for (int i = 0; i < v[x].size(); i++) {
+		dfs(v[x][i]);
+	}
+}
+int main(void) {
+
+	ios_base::sync_with_stdio(0), cin.tie(0), cout.tie(0);
+
+	
+	for (int tc = 1; tc <= 10; tc++) {
+		int t;
+		cin >> t;
+		int n;
+		cin >> n;
+		v.resize(n);
+		for (int i = 0; i < n; i++) {
+			int x, y;
+			cin >> x >> y;
+			v[x].push_back(y);
+		}
+		dfs(0);
+		cout << "#" << tc<<" " << answer << endl;
+		v.clear();
+		answer = 0;
+	}
+	
+
+	return 0;
+}
+
+
+//벡터를 사용하여 두 노드의 그래프를 이어주었다. resize로 입력받은 크기만큼 벡터의 크기를 조정할 수 있다는것을 알게되었다.
