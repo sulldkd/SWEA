@@ -1,0 +1,69 @@
+#define _CRT_SECURE_NO_WARNINGS
+#include <iostream>
+#include <vector>
+#include <queue>
+#include <cstring>
+using namespace std;
+
+int map[101][101];
+int map2[101][101];
+int visit[101][101];
+int dx[4] = { -1, 0, 1,  0 };
+int dy[4] = { 0, 1, 0, -1 };
+int n;
+
+queue<pair<int, int>> q;
+
+void bfs() {
+
+	q.push(make_pair(0, 0));
+
+
+	while (!q.empty()) {
+
+		
+		int x = q.front().first;
+		int y = q.front().second;
+		q.pop();
+
+		for (int i = 0; i < 4; i++) {
+			int nx = x + dx[i];
+			int ny = y + dy[i];
+			if (nx >= 0 && ny >= 0 && nx < n && ny < n) {
+				if (map2[nx][ny] > map[nx][ny] + map2[x][y]) {
+					map2[nx][ny] = map[nx][ny] + map2[x][y];
+					q.push(make_pair(nx, ny));
+				}
+			}
+		}
+	}
+}
+
+int main(void) {
+	int t;
+	cin >> t;
+
+	for (int tc = 1; tc <= t; tc++) {
+		cin >> n;
+		for (int i = 0; i < 101; i++) {
+			for (int j = 0; j < 101; j++) {
+				map2[i][j] = 1e9;
+			}
+		}
+		map2[0][0] = 0;
+		for (int i = 0; i < n; i++) {
+			for (int j = 0; j < n; j++) {
+				scanf("%1d", &map[i][j]);
+			}
+		}
+
+		bfs();
+
+		cout << "#" << tc << " " << map2[n - 1][n - 1] << endl;
+		memset(map, 0, sizeof(map));
+		memset(map2, 0, sizeof(map2));
+	}
+	return 0;
+}
+
+//dfs로 풀면 모든 경로를 탐색해서 시간초과가 난다. bfs로 최단거리를 갱신해가며 풀어야한다. dfs와 bfs의 쓰임과 차이를 더 공부해야겠다고 느꼈다.
