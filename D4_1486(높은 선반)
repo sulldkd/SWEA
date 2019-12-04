@@ -1,0 +1,68 @@
+#define _CRT_SECURE_NO_WARNINGS
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <cmath>
+using namespace std;
+
+int n, b;
+int sum;
+vector<int> v;
+int MIN = 9876543210;
+void Combination(int x) {
+
+
+	vector<int> v2;
+	int k = x;
+
+	for (int i = 0; i < k; i++) {
+		v2.push_back(1);
+	}
+	for (int i = 0; i < v.size() - k; i++) {
+		v2.push_back(0);
+	}
+	sort(v2.begin(), v2.end());
+
+	do {
+		for (int i = 0; i < v2.size(); i++) {
+			if (v2[i] == 1) {
+				sum = sum + v[i];
+			}
+		}
+		if (sum >= b) {
+
+			sum = abs(sum - b);
+			MIN = min(sum, MIN);
+		}
+		sum = 0;
+	} while (next_permutation(v2.begin(), v2.end()));
+}
+int main(void) {
+
+	ios::sync_with_stdio(0), cin.tie(0), cout.tie(0);
+
+	int t;
+	cin >> t;
+	for (int tc = 1; tc <= t; tc++) {
+		cin >> n >> b;
+		
+		for (int i = 0; i < n; i++) {
+			int x;
+			cin >> x;
+			v.push_back(x);
+		}
+		for (int i = 1; i <= n; i++) {
+			Combination(i);
+			
+		}
+
+		cout << "#" << tc << " " << MIN << endl;
+		MIN = 9876543210;
+		v.clear();
+		sum = 0;
+	}
+	
+	return 0;
+}
+
+//next_permutation 함수를 사용하여 모든 조합을 찾아 합을 구해서 해결할 수 있었다. 선반의 높이가 B 이상이라는 조건을 놓쳐서 살짝 해맸다.
