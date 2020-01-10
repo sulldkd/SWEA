@@ -1,0 +1,27 @@
+vector<string> solution(int n, vector<int> arr1, vector<int> arr2) {
+	vector<string> answer;
+	
+	bitset<16> bit;
+	string tmp = "";
+	for (int i =0; i < n; i++) {
+		bit = (arr1[i] | arr2[i]);
+		
+		for (int j = n-1; j >=0; j--) {
+			if (bit[j] == 1) {
+				tmp = tmp + "#";
+			}
+			else {
+				tmp = tmp + " ";
+			}
+		}
+		answer.push_back(tmp);
+		tmp = "";
+	}
+	
+	return answer;
+}
+
+
+//bitset을 사용하여 정수를 이진수로 변환하여 풀었다. bitset<16>을 하게 되면 정수가 16자리의 이진수로 변환된다.
+//bit.size()는 bit의 크기를 반환한다.
+//bit[index]를 통해서 bit 순서에 접근할 수 있다. 주의할 점은 순서는 거꾸로 순서이다 ex)00001011 일떄 bit[0]은 거꾸로기 떄문에 1이다.
